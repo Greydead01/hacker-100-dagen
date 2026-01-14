@@ -2,14 +2,16 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Loading...</title>
+  <title>Transmission</title>
   <style>
     body {
-      background-color: black;
-      color: #00ff00;
+      margin: 0;
+      padding: 20px;
       font-family: Courier New, monospace;
       font-size: 18px;
-      padding: 20px;
+      background-color: white;
+      color: black;
+      transition: background-color 0.5s, color 0.5s;
     }
   </style>
 </head>
@@ -18,25 +20,67 @@
 <div id="screen"></div>
 
 <script>
-  const text = `
-> Connecting...
-> Access granted.
+  const screen = document.getElementById("screen");
 
-Laatste 100 dagen gestart.
+  const hackerText = `
+0xA3F9C1 :: encrypt_stream()
+vector override @ memory[00FF]
+hash collision detected
+rerouting packets...
+SIGINT suppressed
+AUTH_TOKEN = VALID
+`;
+
+  const finalMessage = `
+De laatste 100 dagen komen eraan...
+kans op vuiligheid.
+Wees voorbereid.
 `;
 
   let i = 0;
 
-  function typeText() {
-    if (i < text.length) {
-      document.getElementById("screen").innerHTML +=
-        text[i] === "\n" ? "<br>" : text[i];
-      i++;
-      setTimeout(typeText, 50);
+  function type(text, speed, callback) {
+    i = 0;
+    screen.innerHTML = "";
+    function typing() {
+      if (i < text.length) {
+        screen.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+        i++;
+        setTimeout(typing, speed);
+      } else if (callback) {
+        callback();
+      }
     }
+    typing();
   }
 
-  typeText();
+  // Fase 1: hacker-gedoe
+  type(hackerText, 30, () => {
+    screen.innerHTML += "<br><br>incoming transmission...";
+    
+    // 3 seconden wachten
+    setTimeout(() => {
+      // Fase 2: zwart scherm + groen
+      document.body.style.backgroundColor = "black";
+      document.body.style.color = "#00ff00";
+      screen.innerHTML = "";
+
+      // Typ finale boodschap
+      type(finalMessage, 50, () => {
+        // 5 seconden wachten
+        setTimeout(() => {
+          screen.innerHTML += "<br><br>self destructing";
+          
+          // Poging om tab te sluiten
+          setTimeout(() => {
+            window.close();
+          }, 1500);
+
+        }, 5000);
+      });
+
+    }, 3000);
+  });
 </script>
 
 </body>
