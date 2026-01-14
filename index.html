@@ -69,14 +69,29 @@ Wees voorbereid.
       type(finalMessage, 50, () => {
         // 5 seconden wachten
         setTimeout(() => {
-          screen.innerHTML += "<br><br>self destructing";
-          
-          // Poging om tab te sluiten
-          setTimeout(() => {
-            window.close();
-          }, 1500);
+  screen.innerHTML += "<br><br>self destructing";
 
-        }, 5000);
+  setTimeout(() => {
+    // Alles wissen
+    screen.innerHTML = "";
+
+    // Rood foutbericht in het midden
+    screen.style.display = "flex";
+    screen.style.justifyContent = "center";
+    screen.style.alignItems = "center";
+    screen.style.height = "100vh";
+    screen.style.textAlign = "center";
+    screen.style.color = "red";
+    screen.style.fontSize = "22px";
+
+    screen.innerHTML = `
+Error.<br>
+Senior Zenith 2026 terminated this message
+    `;
+  }, 2000);
+
+}, 5000);
+
       });
 
     }, 3000);
@@ -85,3 +100,4 @@ Wees voorbereid.
 
 </body>
 </html>
+
