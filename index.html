@@ -11,11 +11,32 @@
       font-size: 18px;
       background-color: white;
       color: black;
-      transition: background-color 0.5s, color 0.5s;
+      transition: background-color 0.6s, color 0.6s;
+      overflow: hidden;
     }
 
     #screen {
       white-space: pre-wrap;
+    }
+
+    @keyframes slowZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.08); }
+    }
+
+    @keyframes redFlicker {
+      0%   { color: #ff4d4d; }
+      50%  { color: #8b0000; }
+      100% { color: #ff4d4d; }
+    }
+
+    @keyframes glitch {
+      0%   { transform: translate(0, 0); }
+      20%  { transform: translate(-2px, 1px); }
+      40%  { transform: translate(2px, -1px); }
+      60%  { transform: translate(-1px, 2px); }
+      80%  { transform: translate(1px, -2px); }
+      100% { transform: translate(0, 0); }
     }
   </style>
 </head>
@@ -35,7 +56,7 @@ SIGINT suppressed
 AUTH_TOKEN = VALID
 `;
 
-  const finalMessage = `
+  const warningText = `
 De laatste 100 dagen komen eraan...
 kans op vuiligheid.
 Wees voorbereid.
@@ -54,43 +75,52 @@ Wees voorbereid.
         callback();
       }
     }
-
     typing();
   }
 
-  // FASE 1
-  typeText(hackerText, 30, () => {
+  // FASE 1 – hacker chaos
+  typeText(hackerText, 28, () => {
     screen.innerHTML += "\n\nincoming transmission...";
 
-    // 3 seconden pauze
     setTimeout(() => {
 
-      // RESET NAAR ZWART + GROEN
+      // RESET → zwart + groen
       document.body.style.backgroundColor = "black";
       document.body.style.color = "#00ff00";
       screen.innerHTML = "";
 
-      // FASE 2
-      typeText(finalMessage, 50, () => {
+      // FASE 2 – waarschuwing
+      typeText(warningText, 50, () => {
 
-        // 5 seconden wachten
+        // WACHT 5 SEC → ERROR
         setTimeout(() => {
 
-          screen.innerHTML += "\n\nself destructing";
+          screen.innerHTML = "";
+          screen.style.display = "flex";
+          screen.style.justifyContent = "center";
+          screen.style.alignItems = "center";
+          screen.style.height = "100vh";
+          screen.style.textAlign = "center";
+          screen.style.fontSize = "32px";
+          screen.style.animation = "slowZoom 8s forwards";
 
-          // FINALE ERROR
-          setTimeout(() => {
-            screen.innerHTML = "";
-            screen.style.display = "flex";
-            screen.style.justifyContent = "center";
-            screen.style.alignItems = "center";
-            screen.style.height = "100vh";
-            screen.style.textAlign = "center";
-            screen.style.color = "red";
-            screen.style.fontSize = "22px";
+          screen.innerHTML = `
+<div id="errorText">
+Error.<br><br>
+Senior Zenith 2026 terminated this message
+</div>
+          `;
 
-            screen.innerHTML = `Error.\nSenior Zenith 2026 terminated this message`;
-          }, 2000);
+          const errorText = document.getElementById("errorText");
+          errorText.style.animation = "redFlicker 1.2s infinite";
+
+          // Glitch pulses
+          setInterval(() => {
+            errorText.style.animation += ", glitch 0.15s";
+            setTimeout(() => {
+              errorText.style.animation = "redFlicker 1.2s infinite";
+            }, 150);
+          }, 1800);
 
         }, 5000);
 
