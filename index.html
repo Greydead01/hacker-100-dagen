@@ -13,6 +13,10 @@
       color: black;
       transition: background-color 0.5s, color 0.5s;
     }
+
+    #screen {
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 <body>
@@ -37,60 +41,58 @@ kans op vuiligheid.
 Wees voorbereid.
 `;
 
-  let i = 0;
-
-  function type(text, speed, callback) {
-    i = 0;
+  function typeText(text, speed, callback) {
+    let i = 0;
     screen.innerHTML = "";
+
     function typing() {
       if (i < text.length) {
-        screen.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+        screen.innerHTML += text[i];
         i++;
         setTimeout(typing, speed);
       } else if (callback) {
         callback();
       }
     }
+
     typing();
   }
 
-  // Fase 1: hacker-gedoe
-  type(hackerText, 30, () => {
-    screen.innerHTML += "<br><br>incoming transmission...";
-    
-    // 3 seconden wachten
+  // FASE 1
+  typeText(hackerText, 30, () => {
+    screen.innerHTML += "\n\nincoming transmission...";
+
+    // 3 seconden pauze
     setTimeout(() => {
-      // Fase 2: zwart scherm + groen
+
+      // RESET NAAR ZWART + GROEN
       document.body.style.backgroundColor = "black";
       document.body.style.color = "#00ff00";
       screen.innerHTML = "";
 
-      // Typ finale boodschap
-      type(finalMessage, 50, () => {
+      // FASE 2
+      typeText(finalMessage, 50, () => {
+
         // 5 seconden wachten
         setTimeout(() => {
-  screen.innerHTML += "<br><br>self destructing";
 
-  setTimeout(() => {
-    // Alles wissen
-    screen.innerHTML = "";
+          screen.innerHTML += "\n\nself destructing";
 
-    // Rood foutbericht in het midden
-    screen.style.display = "flex";
-    screen.style.justifyContent = "center";
-    screen.style.alignItems = "center";
-    screen.style.height = "100vh";
-    screen.style.textAlign = "center";
-    screen.style.color = "red";
-    screen.style.fontSize = "22px";
+          // FINALE ERROR
+          setTimeout(() => {
+            screen.innerHTML = "";
+            screen.style.display = "flex";
+            screen.style.justifyContent = "center";
+            screen.style.alignItems = "center";
+            screen.style.height = "100vh";
+            screen.style.textAlign = "center";
+            screen.style.color = "red";
+            screen.style.fontSize = "22px";
 
-    screen.innerHTML = `
-Error.<br>
-Senior Zenith 2026 terminated this message
-    `;
-  }, 2000);
+            screen.innerHTML = `Error.\nSenior Zenith 2026 terminated this message`;
+          }, 2000);
 
-}, 5000);
+        }, 5000);
 
       });
 
@@ -100,4 +102,3 @@ Senior Zenith 2026 terminated this message
 
 </body>
 </html>
-
