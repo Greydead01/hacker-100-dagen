@@ -47,8 +47,7 @@
 <script>
   const screen = document.getElementById("screen");
 
-  const hackerText = `
-  
+  const hackerText = `  
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -67,8 +66,6 @@ typedef struct {
 
 static Node nodes[MAX_NODES];
 static unsigned long entropy = 0xDEADBEEF;
-
-INCOMING TRANSMISSION
 
 `;
 
@@ -101,7 +98,7 @@ KEEP YOUR EYES OPEN
 
   // FASE 1 – hacker chaos
   typeText(hackerText, 28, () => {
-    screen.innerHTML += "\n\nincoming transmission...";
+    screen.innerHTML += "\n\nINCOMING TRANSMISSION";
 
     setTimeout(() => {
 
@@ -123,25 +120,14 @@ KEEP YOUR EYES OPEN
           screen.style.height = "100vh";
           screen.style.textAlign = "center";
           screen.style.fontSize = "32px";
-          screen.style.animation = "slowZoom 8s forwards";
+          
 
           screen.innerHTML = `
 <div id="errorText">
-Error.<br><br>
+<br><br>
 Senior Zenith 2026 terminated this message
 </div>
           `;
-
-          const errorText = document.getElementById("errorText");
-          errorText.style.animation = "redFlicker 1.2s infinite";
-
-          // Glitch pulses
-          setInterval(() => {
-            errorText.style.animation += ", glitch 0.15s";
-            setTimeout(() => {
-              errorText.style.animation = "redFlicker 1.2s infinite";
-            }, 150);
-          }, 1800);
 
         }, 5000);
 
@@ -153,5 +139,6 @@ Senior Zenith 2026 terminated this message
 
 </body>
 </html>
+
 
 
