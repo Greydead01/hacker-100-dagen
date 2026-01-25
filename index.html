@@ -75,6 +75,15 @@ KEEP YOUR EYES OPEN
     typing();
   }
 
+  function randomWord(length) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
   // FASE 1 – hacker-code
   typeText(hackerText, 25, () => {
     screen.innerHTML += "\n\nincoming transmission...";
@@ -101,8 +110,16 @@ KEEP YOUR EYES OPEN
           screen.style.fontSize = "36px";
           screen.style.fontWeight = "900";
 
-          screen.innerHTML =
-            "<strong>SENIOR ZENITH 2026 TERMINATED THIS MESSAGE</strong>";
+          screen.innerHTML = `
+<span id="scramble">AAAAA</span> TERMINATED THIS MESSAGE
+          `;
+
+          const scramble = document.getElementById("scramble");
+
+          // Minecraft-style randomizer
+          setInterval(() => {
+            scramble.textContent = randomWord(5);
+          }, 120);
 
         }, 5000);
 
